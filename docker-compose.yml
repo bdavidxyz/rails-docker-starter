@@ -7,8 +7,34 @@ services:
     image: ruby_dev_009
     ports:
       - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - RAILS_ENV=${RAILS_ENV:-development}
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432
+      - WEBPACKER_DEV_SERVER_HOST=webpacker
+      - PSQL_HISTFILE=/myapp/log/.psql_history
     volumes:
       - ./:/home/app
       - .dockerdev/.bashrc:/root/.bashrc:ro
       - .dockerdev/.railsrc:/root/.railsrc:ro
+      - bundle:/usr/local/bundle
 
+  postgres:
+    image: postgres:12.1
+    volumes:
+      - .psqlrc:/root/.psqlrc:ro
+      - postgres:/var/lib/postgresql/data
+      - ./log:/root/log:cached
+    environment:
+      - PSQL_HISTFILE=/root/log/.psql_history
+    ports:
+      - 5432
+    healthcheck:
+      test: pg_isready -U postgres -h 127.0.0.1
+      interval: 5s
+
+
+
+volumes:
+  postgres:
+  bundle:
