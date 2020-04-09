@@ -1,0 +1,9 @@
+# This options will tell the "rails new" command to avoid the automatic "bundle intall" command, and avoid the automatic "webpack-install" command
+# "rails new" has a weakness : it tries to run "bundle install" with the default version of bundler shipped with Ruby.
+# This is a very bad thing, if you want to use a centralized, unified, docker-defined version of bundler.
+
+# Thus, to install a new Rails app, run "rails new myapp && cd myapp && bundle install && bundle exec webpacker:install"
+
+--skip-bundle 
+--skip-webpack-install 
+-—database=postgresql 

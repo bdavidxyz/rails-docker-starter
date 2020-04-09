@@ -1,0 +1,14 @@
+version: "2.2"
+
+services:
+  ruby_dev:
+    build: .
+    container_name: ruby_container
+    image: ruby_dev_009
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/home/app
+      - .dockerdev/.bashrc:/root/.bashrc:ro
+      - .dockerdev/.railsrc:/root/.railsrc:ro
+
